@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-tab1',
@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor() {this.sort();}
 
     personas = [
       {
@@ -65,6 +65,44 @@ export class Tab1Page {
         "image": "assets/images/pic.png"
       }
     ];
+      @Input() newnombre: string ="";
+      @Input() newapellidos: string ="";
+      @Input() newmatricula: string ="";
+
+      addperson(): void{
+        var newpersona = 
+          {
+            "nombre": this.newnombre,
+            "apellidos": this.newapellidos,
+            "matricula": this.newmatricula,
+            "image": "assets/images/pic.png"
+          };
+        this.personas.push(newpersona);
+        this.sort();
+        this.clear();
+      }
+
+      sort(): void{
+        this.personas.sort(function(a,b){
+          var aname= a.nombre.toUpperCase();
+          var bname= b.nombre.toUpperCase();
+          if(aname>bname){
+            return 1;
+          }
+          if(bname>aname){
+            return -1;
+          }
+        });
+      }
+
+
+      clear(): void{
+        this.newnombre="";
+        this.newapellidos="";
+        this.newmatricula="";
+        this.personas.sort();
+      }
+    
 
 
 
