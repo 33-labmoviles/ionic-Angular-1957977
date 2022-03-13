@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-detalle',
+  templateUrl: './detalle.component.html',
+  styleUrls: ['./detalle.component.scss'],
 })
-export class Tab2Page {
+export class DetalleComponent implements OnInit {
 
-  constructor() {}
+  constructor(private ruta: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.obtenerdetalles(this.matricula);
+  }
+
+
 
   personas = [
     {
@@ -65,4 +72,17 @@ export class Tab2Page {
       "image": "assets/images/pic.png"
     }
   ];
+
+
+  personadetalle: any = {}
+  matricula: string = this.ruta.snapshot.params.id;
+  obtenerdetalles(matricula: string): any{
+  
+    for(let i=0; i< this.personas.length; i++){
+      if(matricula==this.personas[i].matricula){
+        this.personadetalle=this.personas[i];
+      }
+    }
+    return this.personadetalle;
+  }
 }
