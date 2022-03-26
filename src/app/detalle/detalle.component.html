@@ -4,5 +4,7 @@
       <ion-card-subtitle>Matricula: {{personadetalle.matricula}}</ion-card-subtitle>
     </ion-card-header>
 
-    <ion-card-content><img src={{personadetalle.image}} width="1000px" /></ion-card-content>
+    <ion-card-content><img src={{personadetalle.image}} width="900px" />
+      <ion-button (click)="presentActionSheet()">Mostrar más opciones</ion-button>
+    </ion-card-content>
   </ion-card>

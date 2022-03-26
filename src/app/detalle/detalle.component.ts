@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ActionSheetController } from "@ionic/angular";
 
 @Component({
   selector: 'app-detalle',
@@ -8,11 +9,42 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetalleComponent implements OnInit {
 
-  constructor(private ruta: ActivatedRoute) { }
+  constructor(private ruta: ActivatedRoute, public actionsheet: ActionSheetController) { }
 
   ngOnInit() {
     this.obtenerdetalles(this.matricula);
   }
+
+  async presentActionSheet() {
+    const actionsheet = await this.actionsheet.create({
+      mode:'ios',
+      header: 'Opciones',
+      buttons: [{
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        id: 'delete-button',
+        data: {
+          type: 'delete'
+        }
+      }, {
+        text: 'Compartir',
+        icon: 'share',
+        data: 10
+      }, {
+        text: 'Me gusta',
+        icon: 'heart'
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+
+    await actionsheet.present();
+    const { role, data } = await actionsheet.onDidDismiss();
+    }
+ 
 
 
 

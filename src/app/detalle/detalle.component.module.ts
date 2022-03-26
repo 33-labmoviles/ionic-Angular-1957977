@@ -6,6 +6,7 @@ import { DetalleComponent } from "./detalle.component";
 import { RouterLink } from "@angular/router";
 import { RoutesModule } from "../routes.module";
 
+
 @NgModule(
     {
         imports: [CommonModule,FormsModule,IonicModule,RouterLink, RoutesModule],
