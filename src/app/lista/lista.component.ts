@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-lista',
+  templateUrl: './lista.component.html',
+  styleUrls: ['./lista.component.scss'],
 })
-export class Tab2Page {
+export class ListaComponent implements OnInit {
 
-  constructor() {}
+  constructor() { }
+
+  ngOnInit() {}
+
+
 
   personas = [
     {
