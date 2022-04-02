@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DbservService } from '../dbserv.service';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +10,36 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private http: HttpClient, private db: DbservService) {}
+
+
+  onSubmit(form: NgForm) {
+    var newpersona = 
+      {
+        "apellidos": this.newapellidos,
+        "image": "assets/images/pic.png",
+        "matricula": this.newmatricula,
+        "nombre": this.newnombre
+      };
+    this.db.postpersona(newpersona).subscribe();
+    this.clear();
+  }
+
+  newpersona: any = {};
+  personas: any = [];
+
+
+  @Input() newnombre: string ="";
+  @Input() newapellidos: string ="";
+  @Input() newmatricula: string ="";
+
+  clear(): void{
+    this.newnombre="";
+    this.newapellidos="";
+    this.newmatricula="";
+    this.personas.sort();
+  }
+
+  
 
 }

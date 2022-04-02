@@ -15,29 +15,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-grid>
-    <ion-row>
-      Ingrese un nombre:
-      <ion-col>
-        <ion-input placeholder="Ej: Cheems" [(ngModel)]="newnombre"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      Ingrese un apellido:
-      <ion-col>
-        <ion-input placeholder="Ej: Martinez Martinez Salas Salas" [(ngModel)]="newapellidos"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      Ingrese un matricula:
-      <ion-col>
-        <ion-input placeholder="Ej: 123456" [(ngModel)]="newmatricula"></ion-input>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-button (click)="addperson()">Agregar alumno</ion-button>
-
-
   <ion-card *ngFor="let i of personas">
   <ion-card-content>
     <ion-grid>

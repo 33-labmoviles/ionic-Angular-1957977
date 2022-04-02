@@ -1,17 +1,37 @@
-<ion-header [translucent]="true">
+<ion-content>
+  <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Nueva Persona
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" ngNativeValidate>
+<ion-grid>
+  <ion-row>
+    Ingrese un nombre:
+    <ion-col>
+      <ion-input placeholder="Ej: Cheems" [(ngModel)]="newnombre" name="name" required>{{newpersona.nombre}}</ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    Ingrese un apellido:
+    <ion-col>
+      <ion-input placeholder="Ej: Martinez Martinez Salas Salas" [(ngModel)]="newapellidos" name="lastname" required>{{newpersona.apellidos}}</ion-input>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    Ingrese un matricula:
+    <ion-col>
+      <ion-input placeholder="Ej: 123456"  [(ngModel)]="newmatricula" name="mat" required>{{newpersona.matricula}}</ion-input>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-button type="submit">Agregar alumno</ion-button>
+</form>
+
 </ion-content>
