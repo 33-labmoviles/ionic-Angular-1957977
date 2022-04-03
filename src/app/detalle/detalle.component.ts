@@ -14,21 +14,13 @@ export class DetalleComponent implements OnInit {
 
   constructor(private ruta: ActivatedRoute, public actionsheet: ActionSheetController, private http: HttpClient, private db: DbservService) { }
 
-
-
-
-
   indice: string = ''; //Variable que guardará el indice de la persona a buscar
 
 
   ngOnInit() {
     this.db.getpersonas().subscribe(arr => { 
       this.personas=arr; //Guardamos arr (lo de la database) en la variable local personas 
-      //TODO
-      for(let i=0; i< this.personas.lenght; i++){
-
-      }
-      this.indice = 
+      this.indice = this.personas.findIndex( x => x.matricula == this.matricula) // Hallamos el indice en el arreglo tal que la matricula del arreglon sea igual a la matricula del parámetro de URL
       this.db.getpersonadetalle(this.indice).subscribe(det => {this.personadetalle=det;}) //Mandamos a llamar a getpersonadetalle para que nos traiga solo un objeto dado el indice.
     });
   }
@@ -38,8 +30,10 @@ export class DetalleComponent implements OnInit {
   matricula: string = this.ruta.snapshot.params.id;
   personas: any = [];
 
+
+
   eliminar(id: string): any{
-    this.db.deletepersona(id).subscribe( arr => {console.log(id);window.history.back();})
+    this.db.deletepersona(id).subscribe( arr => {console.log(id);window.history.back();window.location.reload})
   }
 
 
@@ -58,17 +52,6 @@ export class DetalleComponent implements OnInit {
         handler: () => {
           this.eliminar(this.indice);
         }
-      }, {
-        text: 'Compartir',
-        icon: 'share',
-        data: 10
-      }, {
-        text: 'Me gusta',
-        icon: 'heart'
-      }, {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel'
       }]
     });
 

@@ -10,27 +10,52 @@
 
   <ion-list>
 
-    <ion-item-sliding *ngFor="let i of personas"  [routerLink]="['/detalles',i.matricula]">
+    <ion-item-sliding *ngFor="let i of personas">
       <ion-item-options side="start">
-        <ion-item-option color="danger" expandable>
+        <ion-item-option color="danger" (click)="eliminar(i)" expandable>
           <ion-icon name="trash"></ion-icon>
           Eliminar
         </ion-item-option>
       </ion-item-options>
 
-    <ion-item>
+
+
+    <ion-item  [routerLink]="['/detalles',i.matricula]">
       <ion-img [src]="i.image"></ion-img>
       <ion-label><strong>Nombre: {{i.nombre}}</strong></ion-label>
     </ion-item>
 
+
     <ion-item-options side="end">
-      <ion-item-option color="success" expandable>
+      <ion-item-option color="success" (click)="edit(i)" expandable>
         <ion-icon name="bookmark"></ion-icon>
-         Guardar
+         Editar 
       </ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
 
   </ion-list>
+  
+    <ion-grid *ngIf="editando">
+      <ion-row>
+        Ingrese un nombre:
+        <ion-col>
+          <ion-input placeholder="Ej: Cheems" [(ngModel)]="newnombre" name="name">{{newpersona.nombre}}</ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        Ingrese un apellido:
+        <ion-col>
+          <ion-input placeholder="Ej: Martinez Martinez Salas Salas" [(ngModel)]="newapellidos" name="lastname">{{newpersona.apellidos}}</ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        Ingrese un matricula:
+        <ion-col>
+          <ion-input placeholder="Ej: 123456"  [(ngModel)]="newmatricula" name="mat">{{newpersona.matricula}}</ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-button (click)="save()">Modificar Persona</ion-button>
+    </ion-grid>
   
 </ion-content>

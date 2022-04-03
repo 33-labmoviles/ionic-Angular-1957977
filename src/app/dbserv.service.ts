@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as firebase from 'firebase/compat';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class DbservService {
     return this.http.post('https://lab-appmoviles-default-rtdb.firebaseio.com/personas.json', nuevo);
   }
 
-  putpersona(id: string, nuevo: any): any {
+  putpersona(id: string, nuevo: any) {
     return this.http.put('https://lab-appmoviles-default-rtdb.firebaseio.com/personas/'+id+'.json', nuevo);
   }
 
