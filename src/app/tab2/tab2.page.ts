@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { DbservService } from '../dbserv.service';
+import { getDatabase, onValue, ref, remove, set, update } from 'firebase/database';
 
 @Component({
   selector: 'app-tab2',
@@ -9,48 +8,63 @@ import { DbservService } from '../dbserv.service';
 })
 export class Tab2Page {
 
-  constructor(private http: HttpClient, private db: DbservService) {}
+  constructor() {}
 
 
   ngOnInit(): void {
-    this.db.getpersonas().subscribe(arr => { this.personas=arr;});
-
+    const database = getDatabase();
+    const auxpersona = ref(database, 'personas/');
+    onValue(auxpersona, (aux) => {
+      this.personas = aux.val();
+      this.personas = Object.values(this.personas);
+    });
   }
 
   eliminar(i: any): any{
-    let index = this.personas.findIndex( x => x.matricula == i.matricula);
-    this.db.deletepersona(index).subscribe( arr => {console.log(index);window.history.back();window.location.reload();})
+    const database = getDatabase();
+    remove(ref(database, 'personas/'+i.matricula));
+    window.history.back();window.location.reload();
   }
 
-  edit(){
+  edit(i:any){
     this.editando = !this.editando;
+    this.indice=i;
   };
 
   save(): any{
-    this.index = this.personas.findIndex( x => x.matricula == this.newmatricula);
-    this.newpersona={
-      "apellidos": this.newapellidos,
-      "image": "assets/images/pic.png",
-      "matricula": this.personas[this.index].matricula,
-      "nombre": this.newnombre
-    };
-    this.db.putpersona(this.index,this.newpersona).subscribe(arr=> {window.location.reload();});
-    console.log(this.newpersona);
-    this.editando=false;
+    const db = getDatabase();
+    update(ref(db, 'personas/'+ this.indice.matricula),{
+      apellidos: this.newapellidos,
+      image: "assets/images/pic.png",
+      matricula: this.indice.matricula,
+      nombre: this.newnombre
+      });
+    window.location.reload();
     this.clear();
   }
 
-  index: string = '';
+  indice: any={};
   editando: boolean = false;
-  newpersona: any = {};
   personas: any = [];
 
   @Input() newnombre: string ="";
   @Input() newapellidos: string ="";
-  @Input() newmatricula: string ="";
 
   clear(): void{
     this.newnombre="";
     this.newapellidos="";
-    this.newmatricula="";  }
+    this.editando=false;
+    this.indice='';
+  }
+
+
+
+  track_matricula(index, i){   //función que solo sirve para "manejar" mejor los ciclos del ngFor 
+    return i.matricula;
+  }
+
+  card_validation(i:any): boolean{ //función que comprueba si un elemento del arreglo de personas está vacío o no, para evitar que se muestre.
+    if (typeof i == 'undefined') return false;
+    else return true;
+  }
 }

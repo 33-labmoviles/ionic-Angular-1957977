@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DataSnapshot } from 'firebase/database';
-import { DbservService } from '../dbserv.service';
+import { Database, set, ref, update, getDatabase } from 'firebase/database';
 
 @Component({
   selector: 'app-tab3',
@@ -11,20 +9,20 @@ import { DbservService } from '../dbserv.service';
 })
 export class Tab3Page {
 
-  constructor(private http: HttpClient, private db: DbservService) {}
-
+  constructor() {}
 
   onSubmit(form: NgForm) {
-    var newpersona = 
-      {
-        "apellidos": this.newapellidos,
-        "image": "assets/images/pic.png",
-        "matricula": this.newmatricula,
-        "nombre": this.newnombre
-      };
-    this.db.postpersona(newpersona).subscribe();
-    this.clear();
+  const db = getDatabase();
+  set(ref(db, 'personas/'+ this.newmatricula),{
+    apellidos: this.newapellidos,
+    image: "assets/images/pic.png",
+    matricula: this.newmatricula,
+    nombre: this.newnombre
+  });
+  window.location.reload();
+  this.clear();
   }
+
 
   newpersona: any = {};
   personas: any = [];

@@ -1,6 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { DbservService } from '../dbserv.service';
+import { getDatabase, onValue, ref } from 'firebase/database';
 
 @Component({
   selector: 'app-tab1',
@@ -9,33 +8,28 @@ import { DbservService } from '../dbserv.service';
 })
 export class Tab1Page {
 
-  constructor(private http: HttpClient, private db: DbservService) {this.sort();}
+  constructor() {}
 
   ngOnInit(): void {
-    this.db.getpersonas().subscribe(arr => { this.personas=arr;});
+    const database = getDatabase();
+    const auxpersona = ref(database, 'personas/');
+    onValue(auxpersona, (aux) => {
+      this.personas = aux.val();
+      this.personas = Object.values(this.personas);
+    });
   }
   
 
   personas: any = [];
 
-
-
-
-
-  sort(): void{
-    this.personas.sort(function(a,b){
-      var aname= a.nombre.toUpperCase();
-      var bname= b.nombre.toUpperCase();
-      if(aname>bname){
-        return 1;
-      }
-      if(bname>aname){
-        return -1;
-      }
-    });
+  track_matricula(index, i){   //función que solo sirve para "manejar" mejor los ciclos del ngFor 
+    return i.matricula;
   }
 
-
+  card_validation(i:any): boolean{ //función que comprueba si un elemento del arreglo de personas está vacío o no, para evitar que se muestre.
+    if (typeof i == 'undefined') return false;
+    else return true;
+  }
 
 
 }

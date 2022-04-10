@@ -3,55 +3,55 @@
     {
       "nombre": "Diosito",
       "apellidos": "????",
-      "matricula": "11111111",
+      "matricula": "0",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "Yo",
       "apellidos": "Guel",
-      "matricula": "1957977",
+      "matricula": "1",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "La profe",
       "apellidos": "the best (paseme profe)",
-      "matricula": "17G35434",
+      "matricula": "2",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "Diosito",
       "apellidos": "????",
-      "matricula": "11112111",
+      "matricula": "3",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "Yo",
       "apellidos": "Guel",
-      "matricula": "1957377",
+      "matricula": "4",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "La profe",
       "apellidos": "the best (paseme profe)",
-      "matricula": "17G35434",
+      "matricula": "5",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "Diosito",
       "apellidos": "????",
-      "matricula": "111111",
+      "matricula": "6",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "Yo",
       "apellidos": "Guel",
-      "matricula": "197977",
+      "matricula": "7",
       "image": "assets/images/pic.png"
     },
     {
       "nombre": "La profe",
       "apellidos": "the best (paseme profe)",
-      "matricula": "175434",
+      "matricula": "8",
       "image": "assets/images/pic.png"
     }
   ]

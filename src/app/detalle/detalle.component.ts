@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from "@ionic/angular";
-import { DbservService } from '../dbserv.service';
 import { Location, registerLocaleData } from '@angular/common';
+import { getDatabase, onValue, ref, remove } from 'firebase/database';
+import { Database } from '@angular/fire/database';
 
 @Component({
   selector: 'app-detalle',
@@ -12,28 +12,23 @@ import { Location, registerLocaleData } from '@angular/common';
 })
 export class DetalleComponent implements OnInit {
 
-  constructor(private ruta: ActivatedRoute, public actionsheet: ActionSheetController, private http: HttpClient, private db: DbservService) { }
-
-  indice: string = ''; //Variable que guardará el indice de la persona a buscar
-
-
+  constructor(private ruta: ActivatedRoute, public actionsheet: ActionSheetController) { }
   ngOnInit() {
-    this.db.getpersonas().subscribe(arr => { 
-      this.personas=arr; //Guardamos arr (lo de la database) en la variable local personas 
-      this.indice = this.personas.findIndex( x => x.matricula == this.matricula) // Hallamos el indice en el arreglo tal que la matricula del arreglon sea igual a la matricula del parámetro de URL
-      this.db.getpersonadetalle(this.indice).subscribe(det => {this.personadetalle=det;}) //Mandamos a llamar a getpersonadetalle para que nos traiga solo un objeto dado el indice.
+    const database = getDatabase();
+    const auxpersonadetalle = ref(database, 'personas/'+this.matricula);
+    onValue(auxpersonadetalle, (aux) => {
+      this.personadetalle = aux.val();
     });
   }
-
   
   personadetalle: any = {}
   matricula: string = this.ruta.snapshot.params.id;
   personas: any = [];
 
-
-
-  eliminar(id: string): any{
-    this.db.deletepersona(id).subscribe( arr => {console.log(id);window.history.back();window.location.reload})
+  eliminar(): any{
+    const database = getDatabase();
+    remove(ref(database, 'personas/'+this.matricula));
+    window.history.back();window.location.reload();
   }
 
 
@@ -50,7 +45,7 @@ export class DetalleComponent implements OnInit {
           type: 'delete'
         },
         handler: () => {
-          this.eliminar(this.indice);
+          this.eliminar();
         }
       }]
     });

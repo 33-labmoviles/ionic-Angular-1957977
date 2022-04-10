@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Ionic con Angular
+      Vista de tarjetas
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +15,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card *ngFor="let i of personas">
+  <div *ngFor="let i of personas; trackBy:track_matricula;">
+  <ion-card *ngIf="card_validation(i)">
   <ion-card-content>
     <ion-grid>
       <ion-row>
@@ -31,6 +32,7 @@
     </ion-grid>
   </ion-card-content>
 </ion-card> 
+</div>
   
 
 </ion-content>
